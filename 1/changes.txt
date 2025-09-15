@@ -1,0 +1,11 @@
+1. remove unvanded script every pages
+
+2. change icons menus
+
+3. mobile view submenu title problem
+
+4. all pages formatted 
+
+5. remove dont use commend code
+
+6. add profile dropdown 
