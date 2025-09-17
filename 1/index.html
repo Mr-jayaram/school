@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management</title>
+    <link rel="shortcut icon" href="https://jaiinfo.tech/logo/logo_only.png">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts (Example: Poppins for a similar look) -->
+    <link href="assets/css/css2.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Link to your external style.css file -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <span>Admin</span>
+            </div>
+            <nav class="menu">
+                <a href="index.html" class="menu-item active">
+                    <i class="bi bi-speedometer2 menu-icon"></i> <span>Dashboard</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                   <i class="bi bi-person-badge menu-icon"></i> <span>Add Member</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="staff.html" class="submenu-item">Staffs</a>
+                    <a href="student.html" class="submenu-item">Students</a>
+                </div>
+
+                <a href="attendance.html" class="menu-item">
+                    <i class="bi bi-calendar-check menu-icon"></i> <span>Attendance</span>
+                </a>
+                <a href="fees.html" class="menu-item">
+                    <i class="bi bi-wallet2 menu-icon"></i> <span>Fees</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu"> <!-- Active Reports link -->
+                    <i class="bi bi-graph-up-arrow menu-icon"></i> <span>Reports</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                
+                <div class="submenu"> 
+                    <a href="report.html" class="submenu-item">Student Reports</a>
+                    <a href="report.html" class="submenu-item">Staff Reports</a>
+                    <a href="report.html" class="submenu-item">Attendance Reports</a>
+                </div>
+
+                <a href="annoncement.html" class="menu-item">
+                    <i class="bi bi-chat-dots-fill menu-icon"></i> <span>Announcements & Messages</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="bi bi-gear-fill menu-icon"></i> <span>Settings</span>
+                </a>
+                
+              <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                  <i class="bi bi-shield-lock menu-icon"></i> <span>Auth</span>
+
+<span class="arrow-icon">&#9660;</span>
+                </a>
+
+                
+                <div class="submenu"> 
+                    <a href="login.html" class="submenu-item">Login</a>
+                    <a href="register.html" class="submenu-item">Register</a>
+                </div>
+            </nav>
+
+        </aside>
+
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <div class="d-flex align-items-center">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
+                        &#9776; 
+                    </button>
+                    <div>
+                        <i class="bi bi-search search-icon"></i>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="assets/img/logo/user.png" alt="Avatar">
+                    <div class="user-info">
+                        <h6>Jon Principal</h6>
+                        <span>School Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- <section class="dashboard-filters">
+                <div class="filter-group">
+                    <label for="academicYearFilter">Academic Year</label>
+                    <select id="academicYearFilter">
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2023-2024">2023-2024</option>
+                        <option value="2022-2023">2022-2023</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="semesterFilter">Term / Semester</label>
+                    <select id="semesterFilter">
+                        <option value="Fall">Fall</option>
+                        <option value="Spring">Spring</option>
+                        <option value="FullYear">Full Year</option>
+                    </select>
+                </div>
+            </section> -->
+
+            <section class="overview-section">
+                <div class="card-title">
+                    Overview
+                    <div class="filter-display">
+                        <span id="overviewFilterText">2024-2025 / Fall</span> <span class="dropdown-arrow">▼</span>
+                    </div>
+                </div>
+                <div class="row g-3 overview-cards">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item orange">
+                            <div class="value" id="totalStudentsValue">1200</div>
+                            <div class="label">Total Students</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item green">
+                            <div class="value" id="totalTeachersValue">75</div>
+                            <div class="label">Total Teachers</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item blue">
+                            <div class="value" id="totalClassesValue">60</div>
+                            <div class="label">Total Classes</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item red">
+                            <div class="value" id="pendingEnrollmentsValue">15</div>
+                            <div class="label">Pending Enrollments</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <div class="card school-performance-card h-100">
+                            <div class="card-title">Overall School Performance</div>
+                            <div class="d-flex align-items-center">
+                                <div class="performance-circle" id="schoolPerformancePercentage">88</div>
+                                <div class="performance-detail">
+                                    <p class="mb-2 text-muted">Avg. Grade: <span id="overallGradeAvg">B+</span></p>
+                                    <p class="mb-1 fw-bold">Details:</p>
+                                    <div class="performance-legend">
+                                        <div class="color-box passing"></div> <span>Passing Rate</span>
+                                    </div>
+                                    <div class="performance-legend">
+                                        <div class="color-box satisfaction"></div> <span>Student Satisfaction</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card attendance-overview-card h-100">
+                            <div class="card-title">Attendance Overview</div>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="attendance-value" id="overallAttendanceRate">92%</div>
+                                    <div class="attendance-subtext" id="absentStudentsToday">5 Absent Today</div>
+                                    <p class="small text-muted mb-0">Last 7 Days Trend</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div class="chart-tabs mb-3 d-inline-flex border rounded-pill p-1 bg-light" id="attendanceChartTabs">
+                                        <button class="btn btn-sm" data-chart-period="day">Day</button>
+                                        <button class="btn btn-sm active" data-chart-period="weekly">Weekly</button>
+                                        <button class="btn btn-sm" data-chart-period="monthly">Monthly</button>
+                                    </div>
+                                    <div class="bar-chart" id="attendanceBarChart">
+                                        <!-- Bars will be dynamically generated -->
+                                        <div class="bar-column"><div class="bar" style="height: 30%;"></div><span class="label">M</span></div>
+                                        <div class="bar-column"><div class="bar" style="height: 50%;"></div><span class="label">T</span></div>
+                                        <div class="bar-column"><div class="bar" style="height: 60%;"></div><span class="label">W</span></div>
+                                        <div class="bar-column"><div class="bar active" style="height: 90%;"></div><span class="label">Th</span></div>
+                                        <div class="bar-column"><div class="bar" style="height: 70%;"></div><span class="label">F</span></div>
+                                        <div class="bar-column"><div class="bar" style="height: 65%;"></div><span class="label">Sa</span></div>
+                                        <div class="bar-column"><div class="bar" style="height: 40%;"></div><span class="label">Su</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="upcoming-exams-section mt-4">
+                <div class="card upcoming-exams-table">
+                    <div class="card-title">
+                        Upcoming Exams & Deadlines
+                        <div class="filter-display">
+                             <span id="upcomingFilterText">Fall Term</span> <span class="dropdown-arrow">▼</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">DATE</th>
+                                    <th scope="col">EVENT</th>
+                                    <th scope="col">CLASS</th>
+                                    <th scope="col">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upcomingExamsTableBody">
+                                <!-- Data will be dynamically generated -->
+                                <tr>
+                                    <td>Oct 15, 2024</td>
+                                    <td>Mid-Term Exam</td>
+                                    <td>Math 101</td>
+                                    <td class="status-upcoming">Upcoming</td>
+                                </tr>
+                                <tr>
+                                    <td>Oct 20, 2024</td>
+                                    <td>Project Submission</td>
+                                    <td>Science 101</td>
+                                    <td class="status-due">Due Soon</td>
+                                </tr>
+                                <tr>
+                                    <td>Oct 25, 2024</td>
+                                    <td>Final Exam</td>
+                                    <td>History 101</td>
+                                    <td class="status-upcoming">Upcoming</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="class-performance-section mt-4">
+                <div class="card-title px-0">
+                    Class Performance Overview
+                </div>
+                <div class="row g-3" id="classPerformanceCards">
+                    <!-- Data will be dynamically generated -->
+                    <div class="col-lg-6 col-md-6">
+                        <div class="class-performance-card-item">
+                            <h6 class="class-title">Math 101</h6>
+                            <div class="grade-value">
+                                <span>Average Grade</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar green" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="class-performance-card-item orange">
+                            <h6 class="class-title">Science 101</h6>
+                            <div class="grade-value">
+                                <span>Average Grade</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar orange" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="class-performance-card-item blue">
+                            <h6 class="class-title">History 101</h6>
+                            <div class="grade-value">
+                                <span>Average Grade</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar blue" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="class-performance-card-item red">
+                            <h6 class="class-title">English 101</h6>
+                            <div class="grade-value">
+                                <span>Average Grade</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar red" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Schedule and Quick Contacts sections -->
+            <section class="schedule-friends-section mt-4">
+                <div class="row g-3">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card h-100">
+                            <div class="card-title">My Schedule <span class="ms-auto">...</span></div>
+                            <div class="schedule-list">
+                                <div class="schedule-item">
+                                    <div class="icon-box meeting"><i class="bi bi-calendar-event"></i></div>
+                                    <div class="content">
+                                        <h6>Staff Meeting</h6>
+                                        <span><i class="bi bi-calendar"></i> October 14, 2024 - 10:00 AM</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-item">
+                                    <div class="icon-box exam"><i class="bi bi-clipboard-check"></i></div>
+                                    <div class="content">
+                                        <h6>Math Department Exam Prep</h6>
+                                        <span><i class="bi bi-calendar"></i> October 14, 2024 - 2:00 PM</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-item">
+                                    <div class="icon-box parent-meeting"><i class="bi bi-person-fill-gear"></i></div>
+                                    <div class="content">
+                                        <h6>Parent-Teacher Conference</h6>
+                                        <span><i class="bi bi-calendar"></i> October 15, 2024 - 3:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card h-100">
+                            <div class="card-title">Quick Contacts <span class="ms-auto">...</span></div>
+                            <div class="quick-contacts-list">
+                                <div class="contact-item">
+                                    <div class="contact-info">
+                                        <img src="assets/img/user/maleavatar.jpg" alt="Maria Rodriguez">
+                                        <div class="name-role">
+                                            <span class="name">Maria Rodriguez</span>
+                                            <span class="role">Head of Academics</span>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-send-fill message-icon"></i>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-info">
+                                        <img src="assets/img/user/maleavatar.jpg" alt="Sam Davies">
+                                        <div class="name-role">
+                                            <span class="name">Sam Davies</span>
+                                            <span class="role">Student Counselor</span>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-send-fill message-icon"></i>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-info">
+                                        <img src="assets/img/user/maleavatar.jpg" alt="Jhon">
+                                        <div class="name-role">
+                                            <span class="name">Emily Chen</span>
+                                            <span class="role">Admin Assistant</span>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-send-fill message-icon"></i>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-info">
+                                        <img src="assets/img/user/maleavatar.jpg" alt="Alex Green">
+                                        <div class="name-role">
+                                            <span class="name">Alex Green</span>
+                                            <span class="role">IT Support</span>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-send-fill message-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggleItems = document.querySelectorAll('.sidebar .menu-item-toggle.has-submenu');
+            const allNavItems = document.querySelectorAll('.sidebar .menu-item, .sidebar .submenu-item');
+            const sidebar = document.getElementById('sidebar');
+            const menuToggleButton = document.getElementById('menuToggle');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const desktopSidebarToggle = document.getElementById('desktopSidebarToggle');
+
+            const academicYearFilter = document.getElementById('academicYearFilter');
+            const semesterFilter = document.getElementById('semesterFilter');
+
+            // Elements to update
+            const totalStudentsValue = document.getElementById('totalStudentsValue');
+            const totalTeachersValue = document.getElementById('totalTeachersValue');
+            const totalClassesValue = document.getElementById('totalClassesValue');
+            const pendingEnrollmentsValue = document.getElementById('pendingEnrollmentsValue');
+
+            const schoolPerformancePercentage = document.getElementById('schoolPerformancePercentage');
+            const overallGradeAvg = document.getElementById('overallGradeAvg');
+
+            const overallAttendanceRate = document.getElementById('overallAttendanceRate');
+            const absentStudentsToday = document.getElementById('absentStudentsToday');
+            const attendanceBarChart = document.getElementById('attendanceBarChart');
+            const attendanceChartTabs = document.getElementById('attendanceChartTabs');
+
+            const upcomingExamsTableBody = document.getElementById('upcomingExamsTableBody');
+            const recentActivityTableBody = document.getElementById('recentActivityTableBody');
+            const classPerformanceCards = document.getElementById('classPerformanceCards');
+            
+            const overviewFilterText = document.getElementById('overviewFilterText');
+            const upcomingFilterText = document.getElementById('upcomingFilterText');
+
+
+            // Simulated Dashboard Data for School Management
+            const dashboardData = {
+                '2024-2025': {
+                    'Fall': {
+                        overview: { students: 1200, teachers: 75, classes: 60, pending: 15 },
+                        schoolPerformance: { percentage: 88, gradeAvg: 'B+', passingRate: '95%', satisfaction: '80%' },
+                        attendanceOverview: { rate: '92%', absentToday: 5, dailyTrend: [85, 90, 92, 90, 95, 88, 93], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+                        upcomingExams: [
+                            { date: 'Oct 15, 2024', event: 'Mid-Term Exam', class: 'Math 101', status: 'Upcoming', statusClass: 'status-upcoming' },
+                            { date: 'Oct 20, 2024', event: 'Project Submission', class: 'Science 101', status: 'Due Soon', statusClass: 'status-due' },
+                            { date: 'Oct 25, 2024', event: 'Final Exam', class: 'History 101', status: 'Upcoming', statusClass: 'status-upcoming' },
+                            { date: 'Nov 01, 2024', event: 'Mid-Term Exam', class: 'English 101', status: 'Upcoming', statusClass: 'status-upcoming' }
+                        ],
+                        recentActivity: [
+                            { timestamp: 'Oct 10, 2:30 PM', user: 'Admin', action: 'Enrolled Student', target: 'John Doe', statusClass: 'status-success' },
+                            { timestamp: 'Oct 09, 10:00 AM', user: 'Teacher A', action: 'Updated Grades', target: 'Math 101', statusClass: 'status-pending' },
+                            { timestamp: 'Oct 08, 9:15 AM', user: 'Admin', action: 'Added Class', target: 'Art 101', statusClass: 'status-success' },
+                            { timestamp: 'Oct 07, 4:00 PM', user: 'Teacher B', action: 'Marked Attendance', target: 'Science 101', statusClass: 'status-success' },
+                            { timestamp: 'Oct 06, 1:00 PM', user: 'Admin', action: 'Archived Course', target: 'Old English', statusClass: 'status-failed' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 85, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 70, colorClass: 'orange' },
+                            { title: 'History 101', avgGrade: 92, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 78, colorClass: 'red' }
+                        ]
+                    },
+                    'Spring': {
+                        overview: { students: 1180, teachers: 73, classes: 58, pending: 8 },
+                        schoolPerformance: { percentage: 90, gradeAvg: 'A-', passingRate: '97%', satisfaction: '85%' },
+                        attendanceOverview: { rate: '94%', absentToday: 3, dailyTrend: [90, 95, 93, 96, 91, 94, 92], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+                        upcomingExams: [
+                            { date: 'Mar 10, 2025', event: 'Spring Break', class: 'All', status: 'Holiday', statusClass: 'status-success' },
+                            { date: 'Apr 01, 2025', event: 'Science Fair', class: 'Science Dept', status: 'Upcoming', statusClass: 'status-upcoming' },
+                            { date: 'Apr 15, 2025', event: 'Final Project Due', class: 'Art 101', status: 'Due Soon', statusClass: 'status-due' }
+                        ],
+                        recentActivity: [
+                            { timestamp: 'Feb 28, 1:00 PM', user: 'Teacher C', action: 'Submitted Grades', target: 'Art 101', statusClass: 'status-success' },
+                            { timestamp: 'Feb 27, 11:00 AM', user: 'Admin', action: 'New Teacher Onboard', target: 'Ms. Smith', statusClass: 'status-success' },
+                            { timestamp: 'Feb 26, 3:45 PM', user: 'Teacher D', action: 'Reported Incident', target: 'Student Jane', statusClass: 'status-failed' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 88, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 75, colorClass: 'orange' },
+                            { title: 'Art 101', avgGrade: 95, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 80, colorClass: 'red' }
+                        ]
+                    },
+                    'FullYear': {
+                        overview: { students: 1250, teachers: 78, classes: 65, pending: 20 },
+                        schoolPerformance: { percentage: 89, gradeAvg: 'B+', passingRate: '96%', satisfaction: '82%' },
+                        attendanceOverview: { rate: '93%', absentToday: 7, dailyTrend: [88, 92, 90, 94, 91, 89, 93], labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'] },
+                        upcomingExams: [
+                            { date: 'Jun 10, 2025', event: 'Graduation Ceremony', class: 'Grade 12', status: 'Event', statusClass: 'status-success' },
+                            { date: 'Jul 01, 2025', event: 'Summer School Starts', class: 'All', status: 'Upcoming', statusClass: 'status-upcoming' }
+                        ],
+                        recentActivity: [
+                            { timestamp: 'May 30, 4:00 PM', user: 'Admin', action: 'Archived Academic Year', target: '2023-2024', statusClass: 'status-success' },
+                            { timestamp: 'May 29, 9:00 AM', user: 'Teacher Lead', action: 'Finalized Curriculum', target: 'All Classes', statusClass: 'status-success' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 86, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 72, colorClass: 'orange' },
+                            { title: 'History 101', avgGrade: 90, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 79, colorClass: 'red' }
+                        ]
+                    }
+                },
+                '2023-2024': {
+                    'Fall': {
+                        overview: { students: 1150, teachers: 70, classes: 55, pending: 10 },
+                        schoolPerformance: { percentage: 85, gradeAvg: 'B', passingRate: '90%', satisfaction: '75%' },
+                        attendanceOverview: { rate: '90%', absentToday: 8, dailyTrend: [80, 85, 88, 85, 90, 87, 82], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+                        upcomingExams: [
+                            { date: 'Nov 15, 2023', event: 'Parent-Teacher Meet', class: 'All', status: 'Event', statusClass: 'status-success' },
+                            { date: 'Dec 01, 2023', event: 'Winter Break', class: 'All', status: 'Holiday', statusClass: 'status-success' }
+                        ],
+                        recentActivity: [
+                            { timestamp: 'Dec 15, 12:00 PM', user: 'Admin', action: 'Closed Fall Term', target: '2023-2024 Fall', statusClass: 'status-success' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 82, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 68, colorClass: 'orange' },
+                            { title: 'History 101', avgGrade: 87, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 75, colorClass: 'red' }
+                        ]
+                    },
+                    'Spring': {
+                        overview: { students: 1130, teachers: 68, classes: 53, pending: 5 },
+                        schoolPerformance: { percentage: 87, gradeAvg: 'B+', passingRate: '92%', satisfaction: '78%' },
+                        attendanceOverview: { rate: '91%', absentToday: 6, dailyTrend: [85, 88, 90, 87, 92, 89, 86], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+                        upcomingExams: [
+                             { date: 'May 20, 2024', event: 'Final Exams', class: 'All', status: 'Upcoming', statusClass: 'status-upcoming' },
+                            { date: 'May 25, 2024', event: 'Grade Submission Deadline', class: 'All Teachers', status: 'Due Soon', statusClass: 'status-due' }
+                        ],
+                        recentActivity: [
+                            { timestamp: 'Jun 05, 11:00 AM', user: 'Teacher', action: 'Submitted Final Grades', target: 'Math 101', statusClass: 'status-success' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 84, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 70, colorClass: 'orange' },
+                            { title: 'History 101', avgGrade: 89, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 77, colorClass: 'red' }
+                        ]
+                    },
+                    'FullYear': {
+                        overview: { students: 1170, teachers: 72, classes: 57, pending: 12 },
+                        schoolPerformance: { percentage: 86, gradeAvg: 'B', passingRate: '91%', satisfaction: '76%' },
+                        attendanceOverview: { rate: '91%', absentToday: 7, dailyTrend: [83, 87, 89, 86, 90, 88, 85], labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'] },
+                        upcomingExams: [],
+                        recentActivity: [
+                            { timestamp: 'Jul 10, 10:00 AM', user: 'Admin', action: 'Started New Academic Year Setup', target: '2024-2025', statusClass: 'status-pending' }
+                        ],
+                        classPerformance: [
+                            { title: 'Math 101', avgGrade: 83, colorClass: 'green' },
+                            { title: 'Science 101', avgGrade: 69, colorClass: 'orange' },
+                            { title: 'History 101', avgGrade: 88, colorClass: 'blue' },
+                            { title: 'English 101', avgGrade: 76, colorClass: 'red' }
+                        ]
+                    }
+                }
+                // Add more academic years or default data as needed
+            };
+
+
+            function closeAllSubmenus(exceptSubmenu = null) {
+                document.querySelectorAll('.sidebar .submenu.show').forEach(submenu => {
+                    if (submenu !== exceptSubmenu) {
+                        submenu.style.maxHeight = '0';
+                        submenu.classList.remove('show');
+                        const parentToggle = submenu.previousElementSibling;
+                        if (parentToggle) {
+                            parentToggle.classList.remove('open');
+                        }
+                    }
+                });
+            }
+
+            menuToggleItems.forEach(item => {
+                item.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const submenu = item.nextElementSibling;
+
+                    if (!sidebar.classList.contains('sidebar-collapsed') || window.innerWidth < 992) {
+                        closeAllSubmenus(submenu);
+
+                        if (submenu && submenu.classList.contains('submenu')) {
+                            item.classList.toggle('open');
+
+                            if (submenu.classList.contains('show')) {
+                                submenu.style.maxHeight = '0';
+                                submenu.classList.remove('show');
+                            } else {
+                                submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                                submenu.classList.add('show');
+                            }
+                        }
+                    }
+                });
+            });
+
+            allNavItems.forEach(item => {
+                item.addEventListener('click', (event) => {
+                    document.querySelectorAll('.sidebar .menu-item, .sidebar .submenu-item').forEach(mi => mi.classList.remove('active'));
+                    (item.closest('.menu-item') || item).classList.add('active');
+
+                    if (item.classList.contains('submenu-item')) {
+                        const parentSubmenu = item.closest('.submenu');
+                        if (parentSubmenu) {
+                            parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + 'px';
+                            parentSubmenu.classList.add('show');
+                            const parentToggle = parentSubmenu.previousElementSibling;
+                            if (parentToggle && parentToggle.classList.contains('menu-item-toggle')) {
+                                parentToggle.classList.add('open');
+                            }
+                        }
+                    } else {
+                        if (!item.closest('.menu-item').classList.contains('has-submenu') && !sidebar.classList.contains('sidebar-collapsed')) {
+                            closeAllSubmenus();
+                        }
+                    }
+                });
+            });
+
+            const initiallyActiveItem = document.querySelector('.sidebar .menu-item.active, .sidebar .submenu-item.active');
+            if (initiallyActiveItem) {
+                if (initiallyActiveItem.classList.contains('submenu-item')) {
+                    const parentSubmenu = initiallyActiveItem.closest('.submenu');
+                    if (parentSubmenu) {
+                        parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + 'px';
+                        parentSubmenu.classList.add('show');
+                        const parentToggle = parentSubmenu.previousElementSibling;
+                        if (parentToggle && parentToggle.classList.contains('menu-item-toggle')) {
+                            parentToggle.classList.add('open');
+                        }
+                    }
+                }
+            }
+
+            menuToggleButton.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-show');
+                sidebarOverlay.classList.toggle('overlay-active');
+                if (sidebar.classList.contains('sidebar-show')) {
+                    sidebar.classList.remove('sidebar-collapsed');
+                    document.body.classList.remove('sidebar-collapsed-active');
+                }
+            });
+
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-show');
+                sidebarOverlay.classList.remove('overlay-active');
+            });
+
+            document.querySelectorAll('.sidebar .menu-item, .sidebar .submenu-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth < 992 && sidebar.classList.contains('sidebar-show')) {
+                        sidebar.classList.remove('sidebar-show');
+                        sidebarOverlay.classList.remove('overlay-active');
+                    }
+                });
+            });
+
+            if (desktopSidebarToggle) {
+                desktopSidebarToggle.addEventListener('click', () => {
+                    const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+                    document.body.classList.toggle('sidebar-collapsed-active', isCollapsed);
+                    
+                    if (isCollapsed) {
+                        closeAllSubmenus();
+                    }
+                });
+            }
+
+            const handleResize = () => {
+                if (window.innerWidth >= 992) {
+                    if (sidebar.classList.contains('sidebar-show')) {
+                        sidebar.classList.remove('sidebar-show');
+                        sidebarOverlay.classList.remove('overlay-active');
+                    }
+                    if (sidebar.classList.contains('sidebar-collapsed')) {
+                        document.body.classList.add('sidebar-collapsed-active');
+                    } else {
+                        document.body.classList.remove('sidebar-collapsed-active');
+                    }
+                    if (desktopSidebarToggle) desktopSidebarToggle.classList.remove('d-none');
+                } else {
+                    sidebar.classList.remove('sidebar-collapsed');
+                    document.body.classList.remove('sidebar-collapsed-active');
+                    if (desktopSidebarToggle) desktopSidebarToggle.classList.add('d-none');
+                }
+                document.querySelectorAll('.sidebar .submenu.show').forEach(submenu => {
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                });
+            };
+
+            window.addEventListener('resize', handleResize);
+            handleResize(); // Initial call
+
+            // --- Dashboard Filter Logic ---
+
+            // Function to render the attendance bar chart
+            function renderAttendanceChart(dailyTrend, labels, activePeriod = 'weekly') {
+                attendanceBarChart.innerHTML = ''; // Clear existing bars
+                dailyTrend.forEach((value, index) => {
+                    const barColumn = document.createElement('div');
+                    barColumn.classList.add('bar-column');
+                    // Assuming value is a percentage, so directly use it for height
+                    const barHeight = value; 
+                    barColumn.innerHTML = `
+                        <div class="bar" style="height: ${barHeight}%;"></div>
+                        <span class="label">${labels[index]}</span>
+                    `;
+                    // Example active bar: for weekly, highlight the highest attendance day for visual impact
+                    const maxAttendance = Math.max(...dailyTrend);
+                    if (value === maxAttendance && index === dailyTrend.indexOf(maxAttendance)) {
+                         barColumn.querySelector('.bar').classList.add('active');
+                    }
+                    attendanceBarChart.appendChild(barColumn);
+                });
+            }
+
+            // Function to apply filters and update all sections
+            function applyFilters() {
+                const selectedAcademicYear = academicYearFilter.value;
+                const selectedSemester = semesterFilter.value;
+                const data = dashboardData[selectedAcademicYear][selectedSemester];
+
+                // Update Overview Cards
+                totalStudentsValue.textContent = data.overview.students;
+                totalTeachersValue.textContent = data.overview.teachers;
+                totalClassesValue.textContent = data.overview.classes;
+                pendingEnrollmentsValue.textContent = data.overview.pending;
+                
+                overviewFilterText.textContent = `${selectedAcademicYear} / ${selectedSemester}`;
+                upcomingFilterText.textContent = `${selectedSemester} Term`;
+
+                // Update Overall School Performance Card
+                schoolPerformancePercentage.textContent = data.schoolPerformance.percentage;
+                schoolPerformancePercentage.style.background = `radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(var(--secondary-green) ${data.schoolPerformance.percentage}%, var(--border-light) 0)`;
+                overallGradeAvg.textContent = data.schoolPerformance.gradeAvg;
+
+                // Update Attendance Overview Card
+                overallAttendanceRate.textContent = data.attendanceOverview.rate;
+                absentStudentsToday.textContent = `${data.attendanceOverview.absentToday} Absent Today`;
+                
+                // Re-render attendance chart based on active tab
+                const activeAttendanceTab = attendanceChartTabs.querySelector('.btn.active');
+                const chartPeriod = activeAttendanceTab ? activeAttendanceTab.dataset.chartPeriod : 'weekly';
+                renderAttendanceChart(data.attendanceOverview.dailyTrend, data.attendanceOverview.labels, chartPeriod);
+
+                // Update Upcoming Exams & Deadlines Table
+                upcomingExamsTableBody.innerHTML = '';
+                if (data.upcomingExams && data.upcomingExams.length > 0) {
+                    data.upcomingExams.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.date}</td>
+                            <td>${item.event}</td>
+                            <td>${item.class}</td>
+                            <td class="${item.statusClass}">${item.status}</td>
+                        `;
+                        upcomingExamsTableBody.appendChild(row);
+                    });
+                } else {
+                     upcomingExamsTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">No upcoming events or exams for this period.</td></tr>`;
+                }
+
+
+                // Update Recent System Activity Table
+                recentActivityTableBody.innerHTML = '';
+                if (data.recentActivity && data.recentActivity.length > 0) {
+                    data.recentActivity.forEach(activity => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${activity.timestamp}</td>
+                            <td>${activity.user}</td>
+                            <td>${activity.action}</td>
+                            <td class="${activity.statusClass}">${activity.target}</td>
+                        `;
+                        recentActivityTableBody.appendChild(row);
+                    });
+                } else {
+                    recentActivityTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">No recent activity for this period.</td></tr>`;
+                }
+                
+
+                // Update Class Performance Cards
+                classPerformanceCards.innerHTML = '';
+                if (data.classPerformance && data.classPerformance.length > 0) {
+                    data.classPerformance.forEach(classData => {
+                        const col = document.createElement('div');
+                        col.classList.add('col-lg-6', 'col-md-6');
+                        col.innerHTML = `
+                            <div class="class-performance-card-item ${classData.colorClass}">
+                                <h6 class="class-title">${classData.title}</h6>
+                                <div class="grade-value">
+                                    <span>Average Grade</span>
+                                    <span>${classData.avgGrade}%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar ${classData.colorClass}" style="width: ${classData.avgGrade}%;"></div>
+                                </div>
+                            </div>
+                        `;
+                        classPerformanceCards.appendChild(col);
+                    });
+                } else {
+                     classPerformanceCards.innerHTML = `<div class="col-12"><p class="text-center text-muted py-4">No class performance data available for this period.</p></div>`;
+                }
+            }
+
+            // Event listeners for global filters
+            academicYearFilter.addEventListener('change', applyFilters);
+            semesterFilter.addEventListener('change', applyFilters);
+
+            // Event listeners for Attendance Overview chart tabs
+            attendanceChartTabs.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    attendanceChartTabs.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    const selectedAcademicYear = academicYearFilter.value;
+                    const selectedSemester = semesterFilter.value;
+                    const data = dashboardData[selectedAcademicYear][selectedSemester];
+                    renderAttendanceChart(data.attendanceOverview.dailyTrend, data.attendanceOverview.labels, this.dataset.chartPeriod);
+                });
+            });
+
+            // Initial filter application on page load
+            applyFilters();
+        });
+    </script>
+</body>
+</html>
