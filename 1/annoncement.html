@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Announcements</title>
+    <link rel="shortcut icon" href="https://jaiinfo.tech/logo/logo_only.png">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts (Example: Poppins for a similar look) -->
+    <link href="assets/css/css2.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Link to your external style.css file -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        /* Custom styles for announcement page (if needed, otherwise can be in style.css) */
+        .announcement-overview-card-item {
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-in-out;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .announcement-overview-card-item:hover {
+            transform: translateY(-5px);
+        }
+        .announcement-overview-card-item .value {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .announcement-overview-card-item .label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Color variations for cards */
+        .announcement-overview-card-item.purple { background-color: #6f42c1; } /* Total */
+        .announcement-overview-card-item.green { background-color: #28a745; } /* Published */
+        .announcement-overview-card-item.yellow { background-color: #ffc107; color: #333; } /* Draft */
+        .announcement-overview-card-item.red { background-color: #dc3545; } /* Archived */
+
+        /* Specific badge colors for announcement statuses */
+        .badge.bg-published { background-color: #28a745 !important; }
+        .badge.bg-draft { background-color: #ffc107 !important; color: #333; }
+        .badge.bg-archived { background-color: #6c757d !important; }
+
+        /* Custom style for the content in view modal to preserve newlines */
+        #viewAnnouncementContent {
+            white-space: pre-wrap; /* Preserves whitespace, including newlines */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+       <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <span>Admin</span>
+            </div>
+            <nav class="menu">
+                <a href="index.html" class="menu-item">
+                    <i class="bi bi-speedometer2 menu-icon"></i> <span>Dashboard</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                   <i class="bi bi-person-badge menu-icon"></i> <span>Add Member</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="staff.html" class="submenu-item">Staffs</a>
+                    <a href="student.html" class="submenu-item">Students</a>
+                </div>
+
+                <a href="attendance.html" class="menu-item">
+                    <i class="bi bi-calendar-check menu-icon"></i> <span>Attendance</span>
+                </a>
+                <a href="fees.html" class="menu-item">
+                    <i class="bi bi-wallet2 menu-icon"></i> <span>Fees</span>
+                </a>
+                
+                <a href="expenses.html" class="menu-item"> 
+                    <i class="bi bi-cash-coin menu-icon"></i> <span>Expenses</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu"> <!-- Active Reports link -->
+                    <i class="bi bi-graph-up-arrow menu-icon"></i> <span>Reports</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu"> <!-- Keep submenu open for active page -->
+                    <a href="report.html" class="submenu-item ">Student Reports</a>
+                    <a href="report.html" class="submenu-item">Staff Reports</a>
+                    <a href="report.html" class="submenu-item">Attendance Reports</a>
+                </div>
+                <a href="announcement.html" class="menu-item active"> <!-- Active link for this page -->
+                    <i class="bi bi-chat-dots menu-icon"></i> <span>Announcements</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="bi bi-gear menu-icon"></i> <span>Settings</span>
+                </a>
+                   
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                  <i class="bi bi-shield-lock menu-icon"></i> <span>Auth</span>
+                  <span class="arrow-icon">&#9660;</span>
+                </a>               
+                <div class="submenu"> 
+                    <a href="login.html" class="submenu-item">Login</a>
+                    <a href="register.html" class="submenu-item">Register</a>
+                </div>
+            </nav>
+
+           
+        </aside>
+
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <div class="d-flex align-items-center">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
+                        &#9776; <!-- Hamburger icon -->
+                    </button>
+                    <div>
+                        <i class="bi bi-search search-icon"></i>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="assets/img/logo/user.png" alt="Avatar">
+                    <div class="user-info">
+                        <h6>Jon Principal</h6>
+                        <span>School Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-filters announcement-filters">
+                <div class="filter-group">
+                    <label for="announcementStatusFilter">Filter by Status</label>
+                    <select id="announcementStatusFilter">
+                        <option value="All">All Statuses</option>
+                        <option value="Published">Published</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="announcementAudienceFilter">Filter by Audience</label>
+                    <select id="announcementAudienceFilter">
+                        <option value="All">All Audiences</option>
+                        <option value="Students">Students</option>
+                        <option value="Staff">Staff</option>
+                        <option value="Parents">Parents</option>
+                    </option>
+                    </select>
+                </div>
+                <div class="filter-group search-group">
+                    <label for="announcementSearch">Search Announcements</label>
+                    <input type="text" class="form-control" id="announcementSearch" placeholder="Search by title or ID">
+                </div>
+                <div class="action-buttons ms-auto">
+                    <button class="btn btn-primary" id="addNewAnnouncementBtn"><i class="bi bi-megaphone me-2"></i>Create New Announcement</button>
+                </div>
+            </section>
+
+            <section class="announcement-overview-section">
+                <div class="card-title">
+                    Announcement Overview
+                    <div class="filter-display">
+                        <span id="overviewFilterText">All Statuses / All Audiences</span> <span class="dropdown-arrow">▼</span>
+                    </div>
+                </div>
+                <div class="row g-3 announcement-overview-cards">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item orange purple">
+                            <div class="value" id="totalAnnouncementsCard">0</div>
+                            <div class="label">Total Announcements</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item green">
+                            <div class="value" id="publishedAnnouncementsCard">0</div>
+                            <div class="label">Published</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item blue">
+                            <div class="value" id="draftAnnouncementsCard">0</div>
+                            <div class="label">Drafts</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="overview-card-item red">
+                            <div class="value" id="archivedAnnouncementsCard">0</div>
+                            <div class="label">Archived</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="announcement-list-section mt-4">
+                <div class="card announcement-table-card">
+                    <div class="card-title">
+                        All Announcements
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table announcement-list-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">TITLE</th>
+                                    <th scope="col">PUBLISH DATE</th>
+                                    <th scope="col">TARGET AUDIENCE</th>
+                                    <th scope="col">STATUS</th>
+                                    <th scope="col">ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="announcementTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals for Announcement Actions -->
+
+    <!-- Add New Announcement Modal -->
+    <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnnouncementModalLabel">Create New Announcement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAnnouncementForm">
+                        <div class="mb-3">
+                            <label for="addAnnouncementTitle" class="form-label">Announcement Title</label>
+                            <input type="text" class="form-control" id="addAnnouncementTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addAnnouncementContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="addAnnouncementContent" rows="5" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="addAnnouncementAudience" class="form-label">Target Audience</label>
+                                <select class="form-select" id="addAnnouncementAudience" required>
+                                    <option value="">Select Audience</option>
+                                    <option value="All">All</option>
+                                    <option value="Students">Students</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Parents">Parents</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="addAnnouncementStatus" class="form-label">Status</label>
+                                <select class="form-select" id="addAnnouncementStatus" required>
+                                    <option value="Draft">Draft</option>
+                                    <option value="Published">Published</option>
+                                    <option value="Archived">Archived</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer mt-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Announcement</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Announcement Details Modal -->
+    <div class="modal fade" id="viewAnnouncementDetailsModal" tabindex="-1" aria-labelledby="viewAnnouncementDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewAnnouncementDetailsModalLabel">Announcement Details: <span id="viewAnnouncementTitle"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Announcement ID:</strong> <span id="viewAnnouncementId"></span></p>
+                    <p><strong>Publish Date:</strong> <span id="viewAnnouncementPublishDate"></span></p>
+                    <p><strong>Target Audience:</strong> <span id="viewAnnouncementAudience"></span></p>
+                    <p><strong>Status:</strong> <span id="viewAnnouncementStatus" class="badge"></span></p>
+                    <hr>
+                    <h6>Content</h6>
+                    <p id="viewAnnouncementContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Announcement Modal -->
+    <div class="modal fade" id="editAnnouncementModal" tabindex="-1" aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAnnouncementModalLabel">Edit Announcement: <span id="editAnnouncementTitleDisplay"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editAnnouncementForm">
+                        <input type="hidden" id="editAnnouncementIdHidden">
+                        <div class="mb-3">
+                            <label for="editAnnouncementTitle" class="form-label">Announcement Title</label>
+                            <input type="text" class="form-control" id="editAnnouncementTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAnnouncementContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="editAnnouncementContent" rows="5" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editAnnouncementAudience" class="form-label">Target Audience</label>
+                                <select class="form-select" id="editAnnouncementAudience" required>
+                                    <option value="All">All</option>
+                                    <option value="Students">Students</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Parents">Parents</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editAnnouncementStatus" class="form-label">Status</label>
+                                <select class="form-select" id="editAnnouncementStatus" required>
+                                    <option value="Draft">Draft</option>
+                                    <option value="Published">Published</option>
+                                    <option value="Archived">Archived</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer mt-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteAnnouncementModal" tabindex="-1" aria-labelledby="deleteAnnouncementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAnnouncementModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the announcement titled "<strong id="deleteAnnouncementTitleConfirm"></strong>" (ID: <span id="deleteAnnouncementIdConfirm"></span>)? This action cannot be undone.
+                    <input type="hidden" id="deleteAnnouncementIdHidden">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteAnnouncementBtn">Delete Announcement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Sidebar and Layout Logic (Copied from previous pages) ---
+           
+
+            // --- Page Specific Elements ---
+            const announcementStatusFilter = document.getElementById('announcementStatusFilter');
+            const announcementAudienceFilter = document.getElementById('announcementAudienceFilter');
+            const announcementSearch = document.getElementById('announcementSearch');
+            const addNewAnnouncementBtn = document.getElementById('addNewAnnouncementBtn');
+
+            const totalAnnouncementsCard = document.getElementById('totalAnnouncementsCard');
+            const publishedAnnouncementsCard = document.getElementById('publishedAnnouncementsCard');
+            const draftAnnouncementsCard = document.getElementById('draftAnnouncementsCard');
+            const archivedAnnouncementsCard = document.getElementById('archivedAnnouncementsCard');
+            const overviewFilterText = document.getElementById('overviewFilterText');
+
+            const announcementTableBody = document.getElementById('announcementTableBody');
+
+            // --- Modal Elements ---
+            // Add Announcement Modal
+            const addAnnouncementModal = new bootstrap.Modal(document.getElementById('addAnnouncementModal'));
+            const addAnnouncementForm = document.getElementById('addAnnouncementForm');
+            const addAnnouncementTitle = document.getElementById('addAnnouncementTitle');
+            const addAnnouncementContent = document.getElementById('addAnnouncementContent');
+            const addAnnouncementAudience = document.getElementById('addAnnouncementAudience');
+            const addAnnouncementStatus = document.getElementById('addAnnouncementStatus');
+
+            // View Announcement Details Modal
+            const viewAnnouncementDetailsModal = new bootstrap.Modal(document.getElementById('viewAnnouncementDetailsModal'));
+            const viewAnnouncementTitle = document.getElementById('viewAnnouncementTitle');
+            const viewAnnouncementId = document.getElementById('viewAnnouncementId');
+            const viewAnnouncementPublishDate = document.getElementById('viewAnnouncementPublishDate');
+            const viewAnnouncementAudience = document.getElementById('viewAnnouncementAudience');
+            const viewAnnouncementStatus = document.getElementById('viewAnnouncementStatus');
+            const viewAnnouncementContent = document.getElementById('viewAnnouncementContent');
+
+            // Edit Announcement Modal
+            const editAnnouncementModal = new bootstrap.Modal(document.getElementById('editAnnouncementModal'));
+            const editAnnouncementForm = document.getElementById('editAnnouncementForm');
+            const editAnnouncementIdHidden = document.getElementById('editAnnouncementIdHidden');
+            const editAnnouncementTitleDisplay = document.getElementById('editAnnouncementTitleDisplay');
+            const editAnnouncementTitle = document.getElementById('editAnnouncementTitle');
+            const editAnnouncementContent = document.getElementById('editAnnouncementContent');
+            const editAnnouncementAudience = document.getElementById('editAnnouncementAudience');
+            const editAnnouncementStatus = document.getElementById('editAnnouncementStatus');
+
+            // Delete Confirmation Modal
+            const deleteAnnouncementModal = new bootstrap.Modal(document.getElementById('deleteAnnouncementModal'));
+            const deleteAnnouncementTitleConfirm = document.getElementById('deleteAnnouncementTitleConfirm');
+            const deleteAnnouncementIdConfirm = document.getElementById('deleteAnnouncementIdConfirm');
+            const deleteAnnouncementIdHidden = document.getElementById('deleteAnnouncementIdHidden');
+            const confirmDeleteAnnouncementBtn = document.getElementById('confirmDeleteAnnouncementBtn');
+
+
+
+
+            // --- Announcement Page Specific Logic ---
+
+            // Simulated Announcement Data
+            let announcementData = [
+                { id: 'ANN001', title: 'Welcome Back to School!', content: 'Dear Students, Staff, and Parents,\n\nWe extend a warm welcome to everyone for the new academic year! We are excited to embark on another year of learning, growth, and memorable experiences.', publishDate: '2025-09-01', audience: 'All', status: 'Published' },
+                { id: 'ANN002', title: 'Parent-Teacher Conference Schedule', content: 'Our annual Parent-Teacher Conferences will be held on October 15th and 16th. Please sign up for a slot via the school portal by October 10th.', publishDate: '2025-09-05', audience: 'Parents', status: 'Published' },
+                { id: 'ANN003', title: 'School Holiday - October 12th', content: 'Please note that the school will be closed on October 12th in observance of Thanksgiving. Classes will resume on October 13th.', publishDate: '2025-09-10', audience: 'All', status: 'Published' },
+                { id: 'ANN004', title: 'New After-School Programs Starting Soon', content: 'We are thrilled to announce the launch of several new after-school programs including coding club, debate team, and art workshops. Enrollment details will be shared next week.', publishDate: '2025-09-12', audience: 'Students', status: 'Draft' },
+                { id: 'ANN005', title: 'Mandatory Staff Meeting Reminder', content: 'A mandatory staff meeting will be held on Friday, September 13th, at 3:00 PM in the library. All teaching and administrative staff are required to attend.', publishDate: '2025-09-12', audience: 'Staff', status: 'Published' },
+                { id: 'ANN006', title: 'Upcoming Field Trip for Grade 5', content: 'Grade 5 students will be visiting the Natural History Museum on September 25th. Consent forms must be submitted by September 20th.', publishDate: '2025-09-13', audience: 'Students', status: 'Published' },
+                { id: 'ANN007', title: 'School Yearbook Photo Submissions', content: 'Calling all students! Submit your candid photos for this year\'s school yearbook. Details on submission guidelines can be found on the student portal.', publishDate: '2025-09-14', audience: 'Students', status: 'Draft' },
+            ];
+
+            function generateAnnouncementId() {
+                const prefix = 'ANN';
+                const currentYear = new Date().getFullYear().toString().slice(-2);
+                const numAnnouncements = announcementData.length + 1;
+                const paddedNum = String(numAnnouncements).padStart(3, '0');
+                return `${prefix}${currentYear}${paddedNum}`;
+            }
+
+            function updateAnnouncementsPage() {
+                const selectedStatus = announcementStatusFilter.value;
+                const selectedAudience = announcementAudienceFilter.value;
+                const searchTerm = announcementSearch.value.toLowerCase();
+
+                let currentAnnouncements = [...announcementData]; // Use a copy for filtering
+
+                // Filter by status
+                if (selectedStatus !== 'All') {
+                    currentAnnouncements = currentAnnouncements.filter(ann => ann.status === selectedStatus);
+                }
+
+                // Filter by audience
+                if (selectedAudience !== 'All') {
+                    currentAnnouncements = currentAnnouncements.filter(ann => ann.audience === selectedAudience);
+                }
+
+                // Filter by search term
+                if (searchTerm) {
+                    currentAnnouncements = currentAnnouncements.filter(ann =>
+                        ann.title.toLowerCase().includes(searchTerm) ||
+                        ann.content.toLowerCase().includes(searchTerm) ||
+                        ann.id.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                // Update Overview Cards
+                totalAnnouncementsCard.textContent = announcementData.length; // Total count is of all announcements
+                publishedAnnouncementsCard.textContent = announcementData.filter(ann => ann.status === 'Published').length;
+                draftAnnouncementsCard.textContent = announcementData.filter(ann => ann.status === 'Draft').length;
+                archivedAnnouncementsCard.textContent = announcementData.filter(ann => ann.status === 'Archived').length;
+
+                overviewFilterText.textContent = `${selectedStatus} / ${selectedAudience}`;
+
+                // Populate Announcement List Table
+                announcementTableBody.innerHTML = ''; // Clear existing rows
+                if (currentAnnouncements.length > 0) {
+                    currentAnnouncements.forEach((announcement, index) => {
+                        const row = document.createElement('tr');
+                        const statusClass = announcement.status.toLowerCase(); // published, draft, archived
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td class="announcement-info">
+                                <span class="title">${announcement.title}</span>
+                            </td>
+                            <td>${announcement.publishDate}</td>
+                            <td>${announcement.audience}</td>
+                            <td><span class="badge bg-${statusClass}">${announcement.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-2 view-announcement-btn" data-announcement-id="${announcement.id}"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-sm btn-outline-info me-2 edit-announcement-btn" data-announcement-id="${announcement.id}"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger delete-announcement-btn" data-announcement-id="${announcement.id}"><i class="bi bi-trash"></i></button>
+                            </td>
+                        `;
+                        announcementTableBody.appendChild(row);
+                    });
+
+                    // Re-attach event listeners to the new buttons
+                    attachAnnouncementActionListeners(currentAnnouncements);
+
+                } else {
+                    announcementTableBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">No announcement records found for this selection.</td></tr>`;
+                }
+            }
+
+            // Function to attach event listeners to announcement action buttons
+            function attachAnnouncementActionListeners(announcementsDisplayed) {
+                announcementTableBody.querySelectorAll('.view-announcement-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const announcementId = this.dataset.announcementId;
+                        const announcement = announcementsDisplayed.find(a => a.id === announcementId);
+                        if (announcement) {
+                            viewAnnouncementTitle.textContent = announcement.title;
+                            viewAnnouncementId.textContent = announcement.id;
+                            viewAnnouncementPublishDate.textContent = announcement.publishDate;
+                            viewAnnouncementAudience.textContent = announcement.audience;
+                            viewAnnouncementStatus.textContent = announcement.status;
+                            viewAnnouncementStatus.className = `badge bg-${announcement.status.toLowerCase()}`;
+                            viewAnnouncementContent.textContent = announcement.content;
+                            viewAnnouncementDetailsModal.show();
+                        }
+                    });
+                });
+
+                announcementTableBody.querySelectorAll('.edit-announcement-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const announcementId = this.dataset.announcementId;
+                        const announcement = announcementsDisplayed.find(a => a.id === announcementId);
+                        if (announcement) {
+                            editAnnouncementIdHidden.value = announcement.id;
+                            editAnnouncementTitleDisplay.textContent = announcement.title;
+                            editAnnouncementTitle.value = announcement.title;
+                            editAnnouncementContent.value = announcement.content;
+                            editAnnouncementAudience.value = announcement.audience;
+                            editAnnouncementStatus.value = announcement.status;
+                            editAnnouncementModal.show();
+                        }
+                    });
+                });
+
+                announcementTableBody.querySelectorAll('.delete-announcement-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const announcementId = this.dataset.announcementId;
+                        const announcement = announcementsDisplayed.find(a => a.id === announcementId);
+                        if (announcement) {
+                            deleteAnnouncementTitleConfirm.textContent = announcement.title;
+                            deleteAnnouncementIdConfirm.textContent = announcement.id;
+                            deleteAnnouncementIdHidden.value = announcement.id;
+                            deleteAnnouncementModal.show();
+                        }
+                    });
+                });
+            }
+
+            // --- Modal Form Submissions/Confirmations ---
+
+            // Add Announcement Form Submission
+            addAnnouncementForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const newAnnouncement = {
+                    id: generateAnnouncementId(), // Generate a unique ID
+                    title: addAnnouncementTitle.value.trim(),
+                    content: addAnnouncementContent.value.trim(),
+                    publishDate: new Date().toISOString().slice(0, 10), // Current date
+                    audience: addAnnouncementAudience.value,
+                    status: addAnnouncementStatus.value,
+                };
+
+                // Basic validation for title uniqueness (optional)
+                if (announcementData.some(a => a.title.toLowerCase() === newAnnouncement.title.toLowerCase())) {
+                    alert('Error: An announcement with this title already exists.');
+                    return;
+                }
+
+                // Simulate adding announcement to mock data
+                announcementData.push(newAnnouncement);
+
+                addAnnouncementModal.hide();
+                alert(`Announcement "${newAnnouncement.title}" (ID: ${newAnnouncement.id}) created successfully.`);
+                addAnnouncementForm.reset();
+                updateAnnouncementsPage();
+            });
+
+
+            // Edit Announcement Form Submission
+            editAnnouncementForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const announcementIdToEdit = editAnnouncementIdHidden.value;
+                const newTitle = editAnnouncementTitle.value.trim();
+                const newContent = editAnnouncementContent.value.trim();
+                const newAudience = editAnnouncementAudience.value;
+                const newStatus = editAnnouncementStatus.value;
+
+                // Simulate data update in mock data
+                const announcementIndex = announcementData.findIndex(a => a.id === announcementIdToEdit);
+                if (announcementIndex !== -1) {
+                    // Check for title uniqueness if changed
+                    if (newTitle.toLowerCase() !== announcementData[announcementIndex].title.toLowerCase() &&
+                        announcementData.some(a => a.title.toLowerCase() === newTitle.toLowerCase() && a.id !== announcementIdToEdit)) {
+                        alert('Error: An announcement with this title already exists.');
+                        return;
+                    }
+
+                    announcementData[announcementIndex].title = newTitle;
+                    announcementData[announcementIndex].content = newContent;
+                    announcementData[announcementIndex].audience = newAudience;
+                    announcementData[announcementIndex].status = newStatus;
+                }
+
+                editAnnouncementModal.hide();
+                alert(`Announcement "${newTitle}" (ID: ${announcementIdToEdit}) updated successfully.`);
+                updateAnnouncementsPage();
+            });
+
+            confirmDeleteAnnouncementBtn.addEventListener('click', function() {
+                const announcementIdToDelete = deleteAnnouncementIdHidden.value;
+
+                // Simulate deletion from mock data
+                const initialLength = announcementData.length;
+                announcementData = announcementData.filter(ann => ann.id !== announcementIdToDelete);
+
+                if (announcementData.length < initialLength) {
+                    alert(`Announcement ID: ${announcementIdToDelete} deleted successfully.`);
+                } else {
+                    alert(`Announcement ID: ${announcementIdToDelete} not found for deletion.`);
+                }
+
+                deleteAnnouncementModal.hide();
+                updateAnnouncementsPage();
+            });
+
+
+            // Event listeners for filters
+            announcementStatusFilter.addEventListener('change', updateAnnouncementsPage);
+            announcementAudienceFilter.addEventListener('change', updateAnnouncementsPage);
+            announcementSearch.addEventListener('input', updateAnnouncementsPage);
+
+            addNewAnnouncementBtn.addEventListener('click', () => {
+                addAnnouncementForm.reset();
+                addAnnouncementModal.show();
+            });
+
+            // Initial call to populate page on load
+            updateAnnouncementsPage();
+        });
+    </script>
+</body>
+</html>
