@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management - Grade Entry</title>
+    <link rel="shortcut icon" href="https://jaiinfo.tech/logo/logo_only.png">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts (Example: Poppins for a similar look) -->
+    <link href="assets/css/css2.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Link to your external style.css file -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Link to page-specific CSS -->
+    <link rel="stylesheet" href="assets/css/grade_entry.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <span>Admin</span>
+            </div>
+            <nav class="menu">
+                <a href="index.html" class="menu-item">
+                    <i class="bi bi-speedometer2 menu-icon"></i> <span>Dashboard</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                   <i class="bi bi-person-badge menu-icon"></i> <span>Add Member</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="staff.html" class="submenu-item">Staffs</a>
+                    <a href="student.html" class="submenu-item">Students</a>
+                </div>
+
+                <a href="attendance.html" class="menu-item">
+                    <i class="bi bi-calendar-check menu-icon"></i> <span>Attendance</span>
+                </a>
+                <a href="fees.html" class="menu-item">
+                    <i class="bi bi-wallet2 menu-icon"></i> <span>Fees</span>
+                </a>
+                <a href="expenses.html" class="menu-item">
+                    <i class="bi bi-cash-coin menu-icon"></i> <span>Expenses</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle active has-submenu">
+                    <i class="bi bi-journal-text menu-icon"></i> <span>Exam</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+
+                <div class="submenu"> 
+                    <a href="timetable.html" class="submenu-item">Time Table</a>
+                    <a href="grade.html" class="submenu-item">Student Grade</a>
+                    <a href="reportCard.html" class="submenu-item">Report Card</a>
+                </div>
+
+                <a href="javascript:void(0);" class="menu-item  menu-item-toggle has-submenu">
+                    <i class="bi bi-graph-up-arrow menu-icon"></i> <span>Reports</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="report.html" class="submenu-item">Student Reports</a>
+                    <a href="report.html" class="submenu-item">Staff Reports</a>
+                    <a href="report.html" class="submenu-item">Attendance Reports</a>
+                </div>
+
+                <a href="annoncement.html" class="menu-item">
+                    <i class="bi bi-chat-dots menu-icon"></i> <span>Announcements</span>
+                </a>
+                 <a href="javascript:void(0);" class="menu-item menu-item-toggle  has-submenu">
+                    <i class="bi bi-file-earmark-text menu-icon"></i> <span>Documents</span><span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="idcard.html" class="submenu-item">Id Card</a>
+                </div>
+                <a href="settings.html" class="menu-item">
+                    <i class="bi bi-gear menu-icon"></i> <span>Settings</span>
+                </a>
+
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                  <i class="bi bi-shield-lock menu-icon"></i> <span>Auth</span>
+                  <span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="login.html" class="submenu-item">Login</a>
+                    <a href="register.html" class="submenu-item">Register</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <div class="d-flex align-items-center">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
+                        &#9776;
+                    </button>
+                    <div>
+                        <i class="bi bi-search search-icon"></i>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="assets/img/logo/user.png" alt="Avatar">
+                    <div class="user-info">
+                        <h6>Jon Principal</h6>
+                        <span>School Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-filters">
+                <div class="filter-group">
+                    <label for="academicYearFilter">Academic Year</label>
+                    <select id="academicYearFilter">
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2023-2024">2023-2024</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="semesterFilter">Term / Semester</label>
+                    <select id="semesterFilter">
+                        <option value="Fall">Fall</option>
+                        <option value="Spring">Spring</option>
+                    </select>
+                </div>
+                 <div class="filter-group">
+                    <label for="classFilter">Class</label>
+                    <select id="classFilter">
+                        <option value="Grade 10">Grade 10</option>
+                        <option value="Grade 9">Grade 9</option>
+                        <option value="Grade 8">Grade 8</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="subjectFilter">Subject</label>
+                    <select id="subjectFilter">
+                        <option value="Math">Math</option>
+                        <option value="Science">Science</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                    </select>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="saveGradesBtn">Save Grades</button>
+                    <button class="btn btn-outline-secondary" id="loadGradesBtn">Load Existing Grades</button>
+                </div>
+            </section>
+
+            <section class="grade-entry-section mt-4">
+                <div class="card grade-entry-table">
+                    <div class="card-title">
+                        Grade Entry
+                        <div class="filter-display">
+                            <span id="gradeEntryFilterText">2024-2025 / Fall / Grade 10 / Math</span> <span class="dropdown-arrow">▼</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STUDENT NAME</th>
+                                    <th scope="col">STUDENT ID</th>
+                                    <th scope="col">MID-TERM (50)</th>
+                                    <th scope="col">ASSIGNMENTS (20)</th>
+                                    <th scope="col">FINAL EXAM (100)</th>
+                                    <th scope="col">TOTAL (170)</th>
+                                    <th scope="col">GRADE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradeEntryBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/data/grade.js"></script>
+</body>
+</html>     

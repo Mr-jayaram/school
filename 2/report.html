@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>School Reports & Analytics</title>
+      <link rel="shortcut icon" href="https://jaiinfo.tech/logo/logo_only.png">
+      <!-- Bootstrap CSS -->
+      <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Google Fonts (Example: Poppins for a similar look) -->
+      <link href="assets/css/css2.css" rel="stylesheet">
+      <!-- Bootstrap Icons CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+      <!-- Link to your external style.css file -->
+      <link rel="stylesheet" href="assets/css/style.css">
+      <style>
+         /* Custom styles for report page */
+         .report-card-item {
+         padding: 20px;
+         border-radius: 8px;
+         color: #fff;
+         text-align: center;
+         box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+         transition: transform 0.2s ease-in-out;
+         min-height: 120px;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         }
+         .report-card-item:hover {
+         transform: translateY(-5px);
+         }
+         .report-card-item .value {
+         font-size: 2.2em;
+         font-weight: 700;
+         margin-bottom: 5px;
+         }
+         .report-card-item .label {
+         font-size: 0.9em;
+         opacity: 0.8;
+         }
+         /* Color variations for cards */
+         .report-card-item.total { background-color: #6f42c1; }
+         .report-card-item.students { background-color: #007bff; }
+         .report-card-item.staff { background-color: #28a745; }
+         .report-card-item.attendance { background-color: #fd7e14; }
+         .report-section {
+         background-color: #fff;
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+         margin-bottom: 20px;
+         }
+         .report-section .section-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 15px;
+         padding-bottom: 10px;
+         border-bottom: 1px solid #eee;
+         }
+         .report-section h5 {
+         margin-bottom: 0;
+         color: #333;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="wrapper">
+         <!-- Sidebar -->
+         <aside class="sidebar" id="sidebar">
+            <div class="logo">
+               <span>Admin</span>
+            </div>
+            <nav class="menu">
+               <a href="index.html" class="menu-item">
+               <i class="bi bi-speedometer2 menu-icon"></i> <span>Dashboard</span>
+               </a>
+               <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+               <i class="bi bi-person-badge menu-icon"></i> <span>Add Member</span> <span class="arrow-icon">&#9660;</span>
+               </a>
+               <div class="submenu">
+                  <a href="staff.html" class="submenu-item">Staffs</a>
+                  <a href="student.html" class="submenu-item">Students</a>
+               </div>
+               <a href="attendance.html" class="menu-item">
+               <i class="bi bi-calendar-check menu-icon"></i> <span>Attendance</span>
+               </a>
+               <a href="fees.html" class="menu-item">
+               <i class="bi bi-wallet2 menu-icon"></i> <span>Fees</span>
+               </a>
+               <a href="expenses.html" class="menu-item"> 
+               <i class="bi bi-cash-coin menu-icon"></i> <span>Expenses</span>
+               </a>
+               <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                    <i class="bi bi-journal-text menu-icon"></i> <span>Exam</span> <span class="arrow-icon">&#9660;</span>
+                </a>
+
+                <div class="submenu"> 
+                    <a href="timetable.html" class="submenu-item">Time Table</a>
+                    <a href="grade.html" class="submenu-item">Student Grade</a>
+                    <a href="reportCard.html" class="submenu-item">Report Card</a>
+                </div>
+               <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                  <!-- Active Reports link -->
+                  <i class="bi bi-graph-up-arrow menu-icon sub-menu-have"></i> <span>Reports</span> <span class="arrow-icon">&#9660;</span>
+               </a>
+               <div class="submenu show">
+                  <!-- Keep submenu open for active page -->
+                  <a href="report.html" class="submenu-item active">Student Reports</a>
+                  <a href="report.html" class="submenu-item">Staff Reports</a>
+                  <a href="report.html" class="submenu-item">Attendance Reports</a>
+               </div>
+               <a href="annoncement.html" class="menu-item">
+               <i class="bi bi-chat-dots menu-icon"></i> <span>Announcements</span>
+               </a>
+                <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+                    <i class="bi bi-file-earmark-text menu-icon"></i> <span>Documents</span><span class="arrow-icon">&#9660;</span>
+                </a>
+                <div class="submenu">
+                    <a href="idcard.html" class="submenu-item">Id Card</a>
+                </div>
+               <a href="settings.html" class="menu-item">
+               <i class="bi bi-gear menu-icon"></i> <span>Settings</span>
+               </a>
+               <a href="javascript:void(0);" class="menu-item menu-item-toggle has-submenu">
+               <i class="bi bi-shield-lock menu-icon"></i> <span>Auth</span>
+               <span class="arrow-icon">&#9660;</span>
+               </a>               
+               <div class="submenu"> 
+                  <a href="login.html" class="submenu-item">Login</a>
+                  <a href="register.html" class="submenu-item">Register</a>
+               </div>
+            </nav>
+         </aside>
+         <!-- Sidebar Overlay (for mobile) -->
+         <div class="sidebar-overlay" id="sidebarOverlay"></div>
+         <!-- Main Content Area -->
+         <main class="main-content">
+            <header class="header">
+               <div class="d-flex align-items-center">
+                  <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
+                     &#9776; <!-- Hamburger icon -->
+                  </button>
+                  <div>
+                     <i class="bi bi-search search-icon"></i>
+                  </div>
+               </div>
+               <div class="user-profile">
+                  <img src="assets/img/logo/user.png" alt="Avatar">
+                  <div class="user-info">
+                     <h6>Jon Principal</h6>
+                     <span>School Admin</span>
+                  </div>
+               </div>
+            </header>
+            <section class="dashboard-filters report-filters">
+               <div class="filter-group">
+                  <label for="reportYearFilter">Academic Year</label>
+                  <select id="reportYearFilter">
+                     <option value="2024-2025">2024-2025</option>
+                     <option value="2023-2024">2023-2024</option>
+                  </select>
+               </div>
+               <div class="filter-group">
+                  <label for="reportTypeFilter">Report Type</label>
+                  <select id="reportTypeFilter">
+                     <option value="All">All Reports</option>
+                     <option value="Students">Student Reports</option>
+                     <option value="Staff">Staff Reports</option>
+                     <option value="Attendance">Attendance Reports</option>
+                  </select>
+               </div>
+               <div class="filter-group search-group">
+                  <label for="reportSearch">Search Reports</label>
+                  <input type="text" class="form-control" id="reportSearch" placeholder="Search report titles...">
+               </div>
+               <div class="action-buttons ms-auto">
+                  <!-- No "Add New" button for reports, but maybe a "Generate Custom Report" in future -->
+               </div>
+            </section>
+            <section class="report-overview-section">
+               <div class="card-title">
+                  Reports Overview
+                  <div class="filter-display">
+                     <span id="overviewFilterText">2024-2025 / All Reports</span> <span class="dropdown-arrow">▼</span>
+                  </div>
+               </div>
+               <div class="row g-3 report-overview-cards">
+                  <div class="col-lg-3 col-md-6">
+                     <div class="overview-card-item orange total">
+                        <div class="value" id="totalReportsCard">3</div>
+                        <div class="label">Total Report Categories</div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                     <div class="overview-card-item green students">
+                        <div class="value" id="studentReportsCard">1</div>
+                        <div class="label">Student Reports</div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                     <div class="overview-card-item blue staff">
+                        <div class="value" id="staffReportsCard">1</div>
+                        <div class="label">Staff Reports</div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                     <div class="overview-card-item red attendance">
+                        <div class="value" id="attendanceReportsCard">1</div>
+                        <div class="label">Attendance Reports</div>
+                     </div>
+                  </div>
+               </div>
+            </section>
+            <section class="reports-list-section mt-4">
+               <!-- Student Reports Section -->
+               <div class="report-section" id="student-reports">
+                  <div class="section-header">
+                     <h5>Student Enrollment Report (2024-2025)</h5>
+                     <button class="btn btn-success btn-sm download-excel-btn" data-report-type="student-enrollment">
+                     <i class="bi bi-file-earmark-excel me-2"></i>Download Excel
+                     </button>
+                  </div>
+                  <div class="table-responsive">
+                     <table class="table table-striped table-hover">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Grade</th>
+                              <th>Department</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody id="studentReportTableBody">
+                           <!-- Data will be loaded by JS -->
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <!-- Staff Reports Section -->
+               <div class="report-section" id="staff-reports">
+                  <div class="section-header">
+                     <h5>Staff Directory Report (2024-2025)</h5>
+                     <button class="btn btn-success btn-sm download-excel-btn" data-report-type="staff-directory">
+                     <i class="bi bi-file-earmark-excel me-2"></i>Download Excel
+                     </button>
+                  </div>
+                  <div class="table-responsive">
+                     <table class="table table-striped table-hover">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Department</th>
+                              <th>Role</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody id="staffReportTableBody">
+                           <!-- Data will be loaded by JS -->
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <!-- Attendance Reports Section -->
+               <div class="report-section" id="attendance-reports">
+                  <div class="section-header">
+                     <h5>Monthly Attendance Summary (September 2025)</h5>
+                     <button class="btn btn-success btn-sm download-excel-btn" data-report-type="attendance-summary">
+                     <i class="bi bi-file-earmark-excel me-2"></i>Download Excel
+                     </button>
+                  </div>
+                  <div class="table-responsive">
+                     <table class="table table-striped table-hover">
+                        <thead>
+                           <tr>
+                              <th>Date</th>
+                              <th>Class</th>
+                              <th>Total Students</th>
+                              <th>Present</th>
+                              <th>Absent</th>
+                              <th>Tardy</th>
+                           </tr>
+                        </thead>
+                        <tbody id="attendanceReportTableBody">
+                           <!-- Data will be loaded by JS -->
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <!-- No reports found message -->
+               <div id="noReportsMessage" class="alert alert-info text-center d-none" role="alert">
+                  No reports match your current filters.
+               </div>
+            </section>
+         </main>
+      </div>
+      <!-- Bootstrap JS and Popper.js -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+      <script src="assets/js/main.js"></script>
+      <script src="assets/js/data/report.js"></script>
+   </body>
+</html>
