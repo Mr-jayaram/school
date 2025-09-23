@@ -1,0 +1,12 @@
+
+5. remove dont use commend code
+
+12. check all form button form exp add expenses btn
+
+16. documents menu cretificate,tc, marklist 
+
+17.CHECK all ofline librays    
+
+19. all input botstrap width
+
+20.  table thead color change and bg
