@@ -1,0 +1,7 @@
+
+5. remove dont use commend code
+
+17.CHECK all ofline librays    
+
+21 imporve loging and register
+
